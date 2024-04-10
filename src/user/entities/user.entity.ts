@@ -20,7 +20,8 @@ export class User {
   password: string;
 
   @OneToMany(() => Category, (category) => category.user)
-  categoty: Category[];
+  category: Category[];
+
   @CreateDateColumn()
   createdAt: Date;
 
