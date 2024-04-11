@@ -67,6 +67,7 @@ export class TransactionService {
 
     return transactions;
   }
+
   async findAllWithPagination(id: number, page: number, limit: number) {
     const transactions = await this.transactionRepository.find({
       where: { user: { id } },
@@ -77,5 +78,18 @@ export class TransactionService {
     });
     if (!transactions) throw new NotFoundException('Transaction not found');
     return transactions;
+  }
+
+  async findAllByType(id: number, type: any) {
+    const transactions = await this.transactionRepository.find({
+      where: {
+        user: { id },
+        type,
+      },
+    });
+    if (!transactions) throw new NotFoundException('Transaction not found');
+
+    const total = transactions.reduce((acc, obj) => acc + obj.amount, 0);
+    return total;
   }
 }
